@@ -109,17 +109,17 @@ export default function Dashboard({
     }, [ventasMes, histFinanciero]);
 
     const kpisGestion = [
-        { key:'tpri', label:'TPRI (D1)', value: tpri ? tpri+'d' : null, sub:'Reposición Inventario', icon:Clock, sem: semaforo(tpri,7,15), meta:'≤7 días' },
+        { key:'tpri', label:'TPRI (D1)', value: tpri ? tpri+'d' : null, sub:'Reposición Inventario', icon:Clock, sem: semaforo(tpri,7,10), meta:'≤7 días' },
         { key:'tafi', label:'TAFI (D2)', value: tafi ? tafi+'min': null, sub:'Flujo de Información',  icon:Activity, sem: semaforo(tafi,15,29), meta:'≤15 min' },
-        { key:'tppp', label:'TPPP (D3)', value: tppp ? tppp+'h': null,  sub:'Procesam. Pedido',       icon:Zap, sem: semaforo(tppp,5,15), meta:'≤5 h' },
+        { key:'tppp', label:'TPPP (D3)', value: tppp ? Math.round(tppp)+'min': null, sub:'Procesam. Pedido', icon:Zap, sem: semaforo(tppp,30,45), meta:'≤30 min' },
         { key:'ei',   label:'EI (D4)',   value: ei   ? ei+'%': null,    sub:'Exactitud Inventario',   icon:Warehouse, sem: semaforo(ei,95,90,true), meta:'≥95%' },
         { key:'pepd', label:'PEPD (D5a)',value: pepd !== null ? pepd+'%': null, sub:'Errores Picking', icon:AlertTriangle, sem: semaforo(pepd,1,3), meta:'<1%' },
         { key:'clp',  label:'CLP (D5b)', value: clp  ? 'S/'+Number(clp).toFixed(0): null, sub:'Costo Log. x Pedido', icon:DollarSign, sem: semaforo(clp,10,20), meta:'≤S/.10' },
     ];
 
     const kpisRent = [
-        { label:'ROA', value: roa ? roa+'%': null, sub:'Rentabilidad / Activos', icon:TrendingUp, sem: semaforo(roa,4,2,true), meta:'≥4%' },
-        { label:'Margen Neto', value: mn ? mn+'%': null, sub:'Utilidad / Ventas', icon:Percent, sem: semaforo(mn,10,6,true), meta:'≥10%' },
+        { label:'ROA', value: roa ? roa+'%': null, sub:'Rentabilidad / Activos', icon:TrendingUp, sem: semaforo(roa,10,6,true), meta:'≥10%' },
+        { label:'Margen Neto', value: mn ? mn+'%': null, sub:'Utilidad / Ventas', icon:Percent, sem: semaforo(mn,9,5,true), meta:'≥9%' },
         { label:'CL/Ventas', value: clv ? clv+'%': null, sub:'Costo Log. / Ventas', icon:Truck, sem: semaforo(clv,8,12), meta:'<8%' },
     ];
 

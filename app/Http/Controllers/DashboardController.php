@@ -22,11 +22,11 @@ class DashboardController extends Controller
             ->where('fecha_envio', '>=', now()->subMonths(3))
             ->avg(DB::raw(DatabaseMetrics::diff('minute', 'fecha_envio', 'fecha_atencion')));
 
-        // ── TPPP: Tiempo promedio procesamiento pedido (horas) ──
+        // ── TPPP: Tiempo promedio procesamiento pedido (minutos) ──
         $tppp = DB::table('pedidos')
             ->whereNotNull('fecha_despacho')
             ->where('fecha_entrada', '>=', now()->subMonths(3))
-            ->avg(DB::raw(DatabaseMetrics::diff('hour', 'fecha_entrada', 'fecha_despacho')));
+            ->avg(DB::raw(DatabaseMetrics::diff('minute', 'fecha_entrada', 'fecha_despacho')));
 
         // ── EI: Exactitud de inventario (%) ──
         $ei = DB::table('conteos_fisicos')
