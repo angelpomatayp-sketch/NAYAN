@@ -306,7 +306,7 @@ class ReporteController extends Controller
             "tafi" => round((float)DB::table("requerimientos")->whereNotNull("fecha_atencion")->avg(DB::raw(DatabaseMetrics::diff("minute", "fecha_envio", "fecha_atencion"))),1),
             "tppp" => round((float)DB::table("pedidos")->whereNotNull("fecha_despacho")->avg(DB::raw(DatabaseMetrics::diff("hour", "fecha_entrada", "fecha_despacho"))),1),
             "ei"   => (float)DB::table("conteos_fisicos")->where("estado","completado")->orderByDesc("fecha_fin")->value("porcentaje_exactitud"),
-            "pepd" => (function(){ $r=DB::table("despachos")->whereIn("estado",["despachado","entregado"])->selectRaw("COUNT(*) as t,SUM(tiene_error) as e")->first(); return $r->t>0?round($r->e/$r->t*100,1):0; })(),
+            "pepd" => (function(){ $r=DB::table("despachos")->whereIn("estado",["despachado","entregado"])->selectRaw("COUNT(*) as t," . DatabaseMetrics::booleanSum("tiene_error") . " as e")->first(); return $r->t>0?round($r->e/$r->t*100,1):0; })(),
             "clp"  => round((float)DB::table("despachos")->whereIn("estado",["despachado","entregado"])->avg("costo_total"),2),
             "trc"  => $totalEntregados > 0 ? round($conReclamo / $totalEntregados * 100, 1) : 0,
             "roa"  => $fin&&$fin->activos_totales>0?round($fin->utilidad_neta/$fin->activos_totales*100,2):0,

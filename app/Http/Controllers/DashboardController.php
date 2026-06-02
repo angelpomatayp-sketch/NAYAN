@@ -38,7 +38,7 @@ class DashboardController extends Controller
         $despachoStats = DB::table('despachos')
             ->whereIn('estado', ['despachado','entregado'])
             ->where('fecha_picking_inicio', '>=', now()->subMonths(3))
-            ->selectRaw('COUNT(*) as total, SUM(tiene_error) as errores')
+            ->selectRaw('COUNT(*) as total, ' . DatabaseMetrics::booleanSum('tiene_error') . ' as errores')
             ->first();
         $pepd = $despachoStats->total > 0
             ? round(($despachoStats->errores / $despachoStats->total) * 100, 1)

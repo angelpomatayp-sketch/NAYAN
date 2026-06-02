@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\DatabaseMetrics;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -54,7 +55,7 @@ class HandleInertiaRequests extends Middleware
                          'requerimientos.prioridad', 'requerimientos.area_origen',
                          'requerimientos.fecha_envio', 'users.name as remitente')
                 ->where('requerimientos.estado', 'pendiente')
-                ->orderByRaw("FIELD(requerimientos.prioridad,'urgente','alta','media','baja')")
+                ->orderByRaw(DatabaseMetrics::priorityOrder('requerimientos.prioridad'))
                 ->orderByDesc('requerimientos.fecha_envio');
 
             if ($area) {

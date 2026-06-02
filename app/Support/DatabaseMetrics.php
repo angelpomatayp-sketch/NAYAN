@@ -40,4 +40,14 @@ class DatabaseMetrics
     {
         return [now()->startOfMonth(), now()->copy()->endOfMonth()];
     }
+
+    public static function priorityOrder(string $column): string
+    {
+        return "CASE {$column} WHEN 'urgente' THEN 1 WHEN 'alta' THEN 2 WHEN 'media' THEN 3 WHEN 'baja' THEN 4 ELSE 5 END";
+    }
+
+    public static function booleanSum(string $column): string
+    {
+        return "SUM(CASE WHEN {$column} THEN 1 ELSE 0 END)";
+    }
 }

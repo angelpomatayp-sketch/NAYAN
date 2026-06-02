@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Support\DatabaseMetrics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -31,7 +32,7 @@ class PickingController extends Controller
             'en_picking'   => DB::table('despachos')->where('estado','en_picking')->count(),
             'despachados'  => DB::table('despachos')->where('estado','despachado')->count(),
             'tasa_error'   => DB::table('despachos')->whereIn('estado',['despachado','entregado'])
-                ->selectRaw('ROUND(SUM(tiene_error)/COUNT(*)*100,1) as tasa')
+                ->selectRaw('ROUND(' . DatabaseMetrics::booleanSum('tiene_error') . '/COUNT(*)*100,1) as tasa')
                 ->value('tasa') ?? 0,
         ];
 
